@@ -1,0 +1,33 @@
+{% macro user_card(data, projectId) %}
+{% for item in data %}
+<div class="col-md-6 col-sm-12 mb-25">
+    <div class="media  py-30  ps-30 pe-20 bg-white radius-xl users-list ">
+       <img class=" me-20 rounded-circle wh-80 bg-opacity-primary  " src="{{ url_for('static', filename=item.avatar) }}" alt="Generic placeholder image">
+       <div class="media-body d-xl-flex users-list-body">
+          <div class="flex-1 pe-xl-30 users-list-body__title">
+             <h6 class="mt-0 fw-500">{{ item.name }} </h6>
+             <span class="fs-6 mt-10">{{ item.email }} </span>
+             <br><span class="fs-6 mt-10">{{ item.mobile }} </span>
+             <br><span class="dm-tag tag-success text-white mt-10">{{ item.position }}</span>
+             <h3 class="mb-0"></h3>
+             <div class="users-list-body__bottom mt-20 position-absolute">
+                <span><span class="fw-600">${{ item.salary_per_hour }} aud/</span>hr</span>
+                <span class="ms-15"><span class="fw-600">{{ item.per_day_work_hours }} hr/</span>per day</span>
+             </div>
+             <div class="users-list-body__bottom mt-50 position-absolute">
+               <span><span class="fw-600">{{ item.break_hours }} hr /</span>per day</span>
+               <span class="ms-15"><span class="fw-600">${{ item.total_salary }} aud</span> total</span>
+            </div>
+             <div class="h-10vh"></div>
+          </div>
+          <div class="users-list__button mt-xl-0 mt-15">
+             <a href="{{ url_for('routes.edit_user', projectId=projectId, userId=item.id) }}" class="btn btn-primary btn-sm btn-default btn-squared text-capitalize px-15 mb-10 global-shadow">Edit user
+             </a>
+             <a class="btn btn-danger btn-sm btn-default btn-squared text-capitalize px-20 mb-10 global-shadow deleteBtn" data-id="{{ item.id }}" data-bs-toggle="modal" data-bs-target="#modal-info-delete">
+                Delete</a>
+          </div>
+       </div>
+    </div>
+ </div>
+ {% endfor %}
+ {% endmacro %}

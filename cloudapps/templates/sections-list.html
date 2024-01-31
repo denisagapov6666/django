@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class="contents">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="contact-breadcrumb breadcrumb-modal3">
+
+               <div class="breadcrumb-main add-contact justify-content-sm-between ">
+                  <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                     <div class="d-flex align-items-center add-contact__title justify-content-center me-sm-25">
+                        <h4 class="text-capitalize fw-500 breadcrumb-title">{{ type }} Checklist</h4>
+                        <span class="sub-title ms-sm-25 ps-sm-25"></span>
+                     </div>
+                     <!-- 
+                           <form action="/" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                              <img src="{{ url_for('static', filename='img/svg/search.svg') }}" alt="search" class="svg">
+                              <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
+                           </form> -->
+
+                  </div>
+                  <div class="action-btn">
+                     
+                     <div class="row">
+                        <div class="col-md-4">
+                           <a href="{{ url_for('routes.tasker_page', userId=userId) }}" class="btn px-15 btn-secondary">
+                              <i class="las la-arrow-circle-left fs-16"></i>Back
+                           </a>
+                        </div>
+                        
+                        <div class="col-md-8">
+                           <a href="#" class="btn px-15 btn-primary ml-1" id="newBtn" data-bs-toggle="modal" data-bs-target="#add-section">
+                              <i class="las la-plus fs-16"></i>Add Section
+                           </a>
+                        </div>
+                        
+                     </div>
+
+                     <!-- Modal -->
+                     <div class="modal fade add-contact" id="add-section" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" bis_skin_checked="1" style="display: none;"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" bis_skin_checked="1">
+                           <div class="modal-content radius-xl w-75 ml-2" bis_skin_checked="1">
+                              <div class="modal-header" bis_skin_checked="1">
+                                 <h6 class="modal-title fw-500" id="staticBackdropLabel">Section Form</h6>
+                                 <button type="button" class="close shadow-none border-0 bg-transparent"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                       fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                       stroke-linejoin="round" class="svg replaced-svg">
+                                       <line x1="18" y1="6" x2="6" y2="18"></line>
+                                       <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                 </button>
+                              </div>
+                              <div class="modal-body" bis_skin_checked="1">
+                                 <div class="horizontal-form" bis_skin_checked="1">
+                                    <form id="sectionForm" method="post">
+                                       {{ form.hidden_tag() }}
+                                       {{ form.mode(id="mode") }}
+                                       
+                                       {{ form.sectionId(id="sectionId") }}
+                                       <div class="form-group row mb-25" bis_skin_checked="1">
+                                          <div class="col-sm-3 d-flex aling-items-center" bis_skin_checked="1">
+                                             <label for="inputName"
+                                                class=" col-form-label color-dark fs-14 fw-500 align-center">Name</label>
+                                          </div>
+                                          <div class="col-sm-9" bis_skin_checked="1">
+                                             {{ form.name(id="inputName", class="form-control ih-medium ip-gray radius-xs b-light px-15", placeholder="Duran Clayton") }}
+                                             
+                                          </div>
+                                       </div>
+                                       <div class="form-group row mb-0" bis_skin_checked="1">
+                                          <div class="col-sm-9" bis_skin_checked="1">
+                                             <div class="layout-button mt-25" bis_skin_checked="1">
+                                                <button type="button"
+                                                   class="btn btn-default btn-squared btn-light px-20" data-bs-dismiss="modal">cancel</button>
+                                                   {{ form.submit(class="btn btn-primary btn-default btn-squared px-30", id="submitBtn") }}
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Modal -->
+
+
+                  </div>
+               </div>
+
+            </div>
+            <!-- ends: contact-breadcrumb -->
+         </div>
+      </div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+               {% for category,message in messages %}
+               <div class="alert-big alert alert-{{ "success" if category=="success" else "error" }}  alert-dismissible fade show " role="alert">
+
+
+                  <div class="alert-content">
+
+                     <h6 class='alert-heading'>{{ category | upper }} !</h6>
+
+
+                     <p>{{ message }}</p>
+
+
+                     <button type="button" class="btn-close text-capitalize" data-bs-dismiss="alert" aria-label="Close">
+
+                        <img src="{{ url_for('static', filename='img/svg/x.svg') }}" alt="x" class="svg" aria-hidden="true">
+
+                     </button>
+
+                  </div>
+               </div>
+               {% endfor %}
+            {% endif %}
+      {% endwith %}
+      <div class="row contact-card-group">
+
+         {%- import 'macros/section-card.html' as sections -%}
+         {{- sections.section_card(data, type, projectId) -}}
+
+
+      </div>
+
+      <div class="d-flex justify-content-md-end justify-content-center mt-15 pt-25 border-top">
+
+         <nav class="dm-page ">
+            <ul class="dm-pagination d-flex">
+               <li class="dm-pagination__item">
+                  {% if data.has_prev %}
+                  <a href="{{ url_for('routes.sections_list',page=data.prev_num, per_page=data.per_page) }}"
+                     class="dm-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
+                  {% endif %}
+                  {% import 'macros/pagination.html' as pagination %}
+                  {{ pagination.render_pagination(data, 'routes.sections_list') }}
+                  {% if data.has_next %}
+                  <a href="{{ url_for('routes.sections_list',page=data.next_num, per_page=data.per_page) }}"
+                     class="dm-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
+                  {% endif %}
+                  <a href="#" class="dm-pagination__option">
+                  </a>
+               </li>
+               <li class="dm-pagination__item">
+                  <div class="paging-option">
+                     <select name="page-number" id="per_page" class="page-selection">
+                        <option value="20">20/page</option>
+                        <option value="40">40/page</option>
+                        <option value="60">60/page</option>
+                     </select>
+                  </div>
+               </li>
+            </ul>
+         </nav>
+
+
+      </div>
+   </div>
+</div>
+<div class="modal-info-delete modal fade show" id="modal-info-delete" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog modal-sm modal-info" role="document">
+      <div class="modal-content">
+         <div class="modal-body">
+            <div class="modal-info-body d-flex">
+               <div class="modal-info-icon warning">
+                  <img src="{{ url_for('static', filename='img/svg/alert-circle.svg') }}" alt="alert-circle"
+                     class="svg">
+               </div>
+               <div class="modal-info-text">
+                  <h6>Are you sure to delete this section?</h6>
+                  <p id="adminName"></p>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-outlined btn-sm" data-bs-dismiss="modal">No</button>
+            <button type="button" id="confirmDeleteBtn" data-id="" class="btn btn-success btn-outlined btn-sm"
+               data-bs-dismiss="modal">Yes</button>
+         </div>
+      </div>
+   </div>
+</div>
+</main>
+<div id="overlayer">
+   <div class="loader-overlay">
+      <div class="dm-spin-dots spin-lg">
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+      </div>
+   </div>
+</div>
+<div class="overlay-dark-sidebar"></div>
+<div class="customizer-overlay"></div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
+<!-- inject:js-->
+<script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery/jquery-ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/accordion.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/autoComplete.js') }}"></script>
+<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicBadge.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicCheckbox.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fullcalendar@5.2.0.js') }}"></script>
+<script src="{{ url_for('static', filename='js/google-chart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-2.0.5.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.filterizr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.peity.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.star-rating-svg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.markercluster.js') }}"></script>
+<script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/message.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/muuri.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popover.js') }}"></script>
+<script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/trumbowyg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wickedpicker.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexmain.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drag-drop.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.js') }}"></script>
+<script src="{{ url_for('static', filename='js/full-calendar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/googlemap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/icon-loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jvectormap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!-- endinject-->
+
+<script>
+
+   $(document).ready(function () {
+
+      const urlParams = new URLSearchParams(window.location.search);
+      var per_page = urlParams.get('per_page');
+
+      if (per_page != null) {
+         $('#per_page').val(per_page);
+      }
+
+
+      $("#newBtn").click(function () {
+         $("#mode").val('add');
+         $("#staticBackdropLabel").text("Create section");
+         $("#submitBtn").val("Create Section");
+         $("#submitBtn").text("create section");
+
+         $("#sectionForm")[0].reset();
+      });
+
+      $(".editBtn").click(function () {
+         $("#mode").val('edit');
+         $("#staticBackdropLabel").text("Edit section");
+         $("#submitBtn").val("Update Section");
+         $("#submitBtn").text("update section");
+
+         var id = $(this).data("id");
+         $("#sectionId").val(id);
+
+         $.ajax({
+            url: "{{ url_for('routes.section_detail') }}",
+            type: "GET",
+            data: { id: id },
+            success: function (data) {
+               $("#inputName").val(data.name);
+            }
+         });
+      });
+
+      $('.deleteBtn').click(function () {
+         var id = $(this).data('id');
+         $('#confirmDeleteBtn').data('id', id);
+
+      });
+
+      $('#confirmDeleteBtn').click(function () {
+         var id = $(this).data('id');
+         $.ajax({
+            url: "{{ url_for('routes.section_delete') }}",
+            type: "GET",
+            data: {
+               id: id,
+               projectId: "{{ projectId }}"
+            },
+            success: function (data) {
+               if (data == 'success') {
+                  location.reload();
+               }
+            }
+         });
+      });
+
+      $('#per_page').change(function () {
+         var per_page = $(this).val();
+         var url = window.location.href;
+
+         if (!url.includes('?')) {
+            url += '?per_page=' + per_page;
+         } else if (!url.includes('per_page')) {
+            url += '&per_page=' + per_page;
+         } else {
+            var regex = /(\?|&)per_page=\d+/;
+            url = url.replace(regex, '$1per_page=' + per_page);
+         }
+
+         window.location.href = url;
+      });
+
+
+   });
+
+</script>
+
+{% endblock %}

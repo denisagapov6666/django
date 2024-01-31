@@ -1,0 +1,66 @@
+{% macro project_item(data) %}
+{% for item in data %}
+<tr>
+    <td>
+       <div class="d-flex">
+          <div class="userDatatable-inline-title">
+             <a href="#" class="text-dark fw-500">
+                <h6>{{ item.Project.name }}</h6>
+             </a>
+             <p class="pt-1 d-block mb-0">
+                {{ item.Manager.mobile }}
+             </p>
+          </div>
+       </div>
+    </td>
+    <td>
+       <div class="userDatatable-content">
+          {{ item.Project.created_at.strftime('%d %b %Y') }}
+       </div>
+    </td>
+    <td>
+       <div class="userDatatable-content text-center">
+          {{ 0 if item.Project.manager_count==null else item.Project.manager_count }}
+       </div>
+    </td>
+    <td>
+      <div class="userDatatable-content text-center">
+         {{ 0 if item.Project.users_count==null else item.Project.users_count }}
+      </div>
+   </td>
+   <td>
+      <div class="userDatatable-content text-center">
+         {{ 0 if item.Project.investigation_count==null else item.Project.investigation_count }}
+      </div>
+   </td>
+    <td>
+       <div class="project-progress d-flex align-items-center">
+          <div class="user-group-progress-bar">
+             <div class="progress-wrap d-flex align-items-center mb-0">
+                <div class="progress">
+                   <div class="progress-bar bg-primary" role="progressbar" style="width: {{ 0 if item.Project.percentage ==null else item.Project.percentage }}%;" aria-valuenow="{{ 0 if item.Project.percentage ==null else item.Project.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <span class="progress-percentage">{{ 0 if item.Project.percentage ==null else item.Project.percentage }}%</span>
+             </div>
+             <p class="color-light fs-12 mt-1 mb-0">{{ 0 if item.Project.completed_tasks ==null else item.Project.completed_tasks }} / {{ 0 if item.Project.total_tasks==null else item.Project.total_tasks }} tasks completed</p>
+          </div>
+       </div>
+    </td>
+    <td>
+       <div class="project-progress text-end">
+          <div class="dropdown dropdown-click position-relative mt-n20">
+             <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('static', filename='img/svg/more-horizontal.svg') }}" alt="more-horizontal" class="svg">
+             </button>
+             <div class="dropdown-default dropdown-bottomLeft dropdown-menu-right dropdown-menu--dynamic dropdown-menu">
+                <a class="dropdown-item" href="#">Deactivate</a>
+                <a class="dropdown-item editBtn" data-id="{{ item.Project.id }}" data-bs-toggle="modal" data-bs-target="#new-member" href="#">Edit</a>
+                <a class="dropdown-item deleteBtn" data-id="{{ item.Project.id }}" data-bs-toggle="modal" data-bs-target="#modal-info-delete" href="#">Delete</a>
+             </div>
+          </div>
+       </div>
+    </td>
+ </tr>
+
+ {% endfor %}
+ {% endmacro %}

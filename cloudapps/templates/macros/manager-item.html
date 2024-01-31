@@ -1,0 +1,66 @@
+{% macro manager_item(data) %}
+{% for item in data %}
+
+<tr>
+    <td>
+       <div class="d-flex align-items-center">
+          <div class="me-3 d-flex align-items-center">
+             <div class="checkbox-group-wrapper">
+                <div class="checkbox-group d-flex me-3">
+                   <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                      <input class="checkbox" type="checkbox" id="check-grp-ellie11">
+                      <label for="check-grp-ellie11"></label>
+                   </div>
+                </div>
+             </div>
+             <a href="#" class="">
+                <img src="{{ url_for('static', filename=item.avatar) }}" class="profile-image rounded-circle d-block m-0 wh-50" alt="Avatar">
+            </a>
+            
+          </div>
+          <div class="orderDatatable-title">
+             <p class="d-block mb-0">
+                {{ item.name }}
+             </p>
+          </div>
+       </div>
+    </td>
+    <td>
+       <div class="orderDatatable-title">
+            {{ item.email }}
+       </div>
+    </td>
+    <td>
+       <div class="orderDatatable-title">
+            {{ item.mobile }}
+       </div>
+    </td>
+    <td>
+       <div class="orderDatatable-title">
+          {{ item.position }}
+       </div>
+    </td>
+    <td>
+       <div class="orderDatatable-title float-end">
+          {{ item.created_at.strftime('%d %b %Y') }}
+       </div>
+    </td>
+
+    <td>
+       <ul class="orderDatatable_actions mb-0 d-flex flex-wrap float-end">
+          <li>
+             <a href="#" class="edit editBtn" data-id="{{ item.id }}" data-bs-toggle="modal" data-bs-target="#new-member">
+                <i class="uil uil-edit"></i>
+             </a>
+          </li>
+          <li>
+             <a href="#" class="remove deleteBtn" data-id="{{ item.id }}" data-bs-toggle="modal" data-bs-target="#modal-info-delete">
+                <i class="uil uil-trash-alt"></i>
+             </a>
+          </li>
+       </ul>
+    </td>
+ </tr>
+
+{% endfor %}
+{% endmacro %}

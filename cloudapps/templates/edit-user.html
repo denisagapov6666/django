@@ -1,0 +1,553 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class="contents">
+
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="d-flex align-items-center user-member__title mb-30 mt-30">
+               <h4 class="text-capitalize">edit user</h4>
+            </div>
+         </div>
+      </div>
+
+      <div class="card mb-50">
+         <div class="row justify-content-center">
+            <div class="col-md-5 col-10">
+               <div class="mt-40 mb-50">
+                  <form method="post" id="userForm" enctype="multipart/form-data">
+                     {{ form.userId(id="userId", value=user.id) }}
+
+                     {{ form.hidden_tag() }}
+
+                     <div class="account-profile d-flex align-items-center mb-4 ">
+                        <div class="ap-img pro_img_wrapper">
+                           {{ form.image(id="image", class="d-none") }}
+                           
+                           <!-- Profile picture image-->
+                           <label for="image">
+                              <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex" id="imageBox"
+                                 src="{{ url_for('static', filename=user.avatar) }}" alt="profile">
+                              <span class="cross" id="remove_pro_pic">
+                                 <img src="{{ url_for('static', filename='img/svg/camera.svg') }}" alt="camera"
+                                    class="svg">
+                              </span>
+                           </label>
+                        </div>
+                        <div class="account-profile__title">
+                           <h6 class="fs-15 ms-20 fw-500 text-capitalize">profile photo</h6>
+                        </div>
+                     </div>
+                     <div class="edit-profile__body">
+                        <div class="form-group mb-25">
+                           <label for="name1">name</label>
+                           <div class="with-icon">
+                              <span class="la-user las"></span>
+                              {{ form.name(id="name", class="form-control input-with-icon", placeholder="Duran Clayton", value=user.name) }}
+                           </div>
+                        </div>
+                        <div class="form-group mb-25">
+                           <label for="name2">Email</label>
+                           <div class="with-icon">
+                              <span class="la-envelope las"></span>
+                              {{ form.email(id="email", class="form-control input-with-icon", placeholder="sample@example.com", value=user.email) }}
+                              
+                           </div>
+                        </div>
+                        <div class="form-group mb-25">
+                           <label for="phoneNumber5">phone number</label>
+                           <div class="with-icon">
+                              <span class="la-phone las"></span>
+                              {{ form.mobile(id="mobile", class="form-control input-with-icon", placeholder="+971 000001000", value=user.mobile) }}
+                              
+                           </div>
+                        </div>
+                        <div class="form-group mb-25">
+                           <label for="phoneNumber2">Position</label>
+                           <div class="with-icon">
+                              <span class="la-bookmark las"></span>
+                              {{ form.position(id="position", class="form-control input-with-icon", placeholder="Developer, worker,..", value=user.position) }}
+                           </div>
+                        </div>
+                        <div class="form-group mb-60">
+                           <label for="password">Password</label>
+                           <div class="with-icon">
+                              <span class="la-lock las"></span>
+                              {{ form.password(id="password", class="form-control input-with-icon", placeholder="*********") }}
+                           </div>
+                        </div>
+                        <div class="row mb-25">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="total_work_hours">Total work hours monthly</label>
+                                 <div class="with-icon">
+                                    <span class="la-user-clock las"></span>
+                                    {{ form.total_work_hours(id="total_work_hours", class="form-control input-with-icon", placeholder="", value=user.total_work_hours) }}
+                                    
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="work">Salary per hour</label>
+                                 <div class="with-icon">
+                                    <span class="la-clock las"></span>
+                                    {{ form.salary_per_hour(id="salary_per_hour", class="form-control input-with-icon", placeholder="1.10", value=user.salary_per_hour) }}
+
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row mb-25">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="total_salary">Total salary</label>
+                                 <div class="with-icon">
+                                    <span class="la-money-bill-wave las"></span>
+                                    {{ form.total_salary(id="total_salary", class="form-control input-with-icon",
+                                    placeholder="10.10", value=user.total_salary) }}
+
+                                 </div>
+                              </div>
+                              
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="per_day_work_hours">work hours per day</label>
+                                 <div class="with-icon">
+                                    <span class="la-money-bill-wave las"></span>
+                                    {{ form.per_day_work_hours(id="per_day_work_hours", class="form-control input-with-icon",
+                                    placeholder="10.10", value=user.per_day_work_hours) }}
+
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row mb-25">
+                           <div class="col-md-6">
+                              <div class="form-group" bis_skin_checked="1">
+                                 <label for="duty_starts">Duty starts</label>
+                                 <div class="time-picker" bis_skin_checked="1">
+                                    <div class="input-container icon-right position-relative w-100 color-light "
+                                       bis_skin_checked="1">
+                                       <span class="input-icon icon-right">
+                                          <span class="la-hourglass-start las"></span>
+                                       </span>
+                                       {{ form.duty_starts(id="duty_starts", class="form-control ih-medium ip-light
+                                       radius-xs b-light px-15 hasWickedpicker time-picker-new", placeholder="12:00 AM",
+                                       **{"aria-showingpicker":"false", "tabindex":"0", "onkeypress":"return false;"})
+                                       }}
+
+                                       <!-- <input type="text"
+                                          class="form-control ih-medium ip-light radius-xs b-light px-15 color-lighten hasWickedpicker"
+                                          id="time-picker" placeholder="12:00 AM" onkeypress="return false;"
+                                          aria-showingpicker="false" tabindex="0"> -->
+                                    </div>
+                                 </div>
+                              </div>
+                              
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="duty_ends">Duty ends</label>
+                                 <div class="time-picker" bis_skin_checked="1">
+                                    <div class="input-container icon-right position-relative w-100 color-light "
+                                       bis_skin_checked="1">
+                                       <span class="input-icon icon-right">
+                                          <span class="la-hourglass-end las"></span>
+                                       </span>
+                                       {{ form.duty_ends(id="duty_ends", class="form-control ih-medium ip-light
+                                       radius-xs b-light px-15 hasWickedpicker time-picker-new", placeholder="12:00 PM",
+                                       **{"aria-showingpicker":"false", "tabindex":"0", "onkeypress":"return false;"})
+                                       }}
+
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row mb-25">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="work">Break hours</label>
+                                 <div class="with-icon">
+                                    <span class="la-pause-circle las"></span>
+                                    {{ form.break_hours(id="break_hours", class="form-control input-with-icon",
+                                    placeholder="", value=user.break_hours) }}
+
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="break_from">Break from</label>
+                                 <div class="time-picker" bis_skin_checked="1">
+                                    <div class="input-container icon-right position-relative w-100 color-light "
+                                       bis_skin_checked="1">
+                                       <span class="input-icon icon-right">
+                                          <span class="la-hourglass-start las"></span>
+                                       </span>
+                                       {{ form.break_from(id="break_from", class="form-control ih-medium ip-light
+                                       radius-xs b-light px-15 hasWickedpicker time-picker-new", placeholder="12:00 AM",
+                                       **{"aria-showingpicker":"false", "tabindex":"0", "onkeypress":"return false;"})
+                                       }}
+
+
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row mb-25">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="break_to">Break to</label>
+                                 <div class="time-picker" bis_skin_checked="1">
+                                    <div class="input-container icon-right position-relative w-100 color-light "
+                                       bis_skin_checked="1">
+                                       <span class="input-icon icon-right">
+                                          <span class="la-hourglass-end las"></span>
+                                       </span>
+                                       {{ form.break_to(id="break_to", class="form-control ih-medium ip-light radius-xs
+                                       b-light px-15 hasWickedpicker time-picker-new", placeholder="12:00 PM",
+                                       **{"aria-showingpicker":"false", "tabindex":"0", "onkeypress":"return false;"})
+                                       }}
+
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              
+                           </div>
+                        </div>
+
+                        {{ form.day_schedule(id="day_schedule") }}
+                        <div class="text-center" bis_skin_checked="1">
+                           <label class="text-dark fs-7 fw-500">Work Schedule</label>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox sunday" type="checkbox" id="check-un1">
+                                 <label for="check-un1">
+                                    <span class="checkbox-text text-dark">
+                                       Sunday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox monday" type="checkbox" id="check-un2">
+                                 <label for="check-un2">
+                                    <span class="checkbox-text text-dark">
+                                       Monday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox tuesday" type="checkbox" id="check-un3">
+                                 <label for="check-un3">
+                                    <span class="checkbox-text text-dark">
+                                       Tuesday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox wednesday" type="checkbox" id="check-un4">
+                                 <label for="check-un4">
+                                    <span class="checkbox-text text-dark">
+                                       Wednesday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox thursday" type="checkbox" id="check-un5">
+                                 <label for="check-un5">
+                                    <span class="checkbox-text text-dark">
+                                       Thursday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox friday" type="checkbox" id="check-un6">
+                                 <label for="check-un6">
+                                    <span class="checkbox-text text-dark">
+                                       Friday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox saturday" type="checkbox" id="check-un7">
+                                 <label for="check-un7">
+                                    <span class="checkbox-text text-dark">
+                                       Saturday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="button-group d-flex pt-25 justify-content-md-end justify-content-start">
+                           
+                           {{ form.submit(class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2 btn-sm", id="submitBtn") }}
+
+                        </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+</div>
+
+</main>
+<div id="overlayer">
+   <div class="loader-overlay">
+      <div class="dm-spin-dots spin-lg">
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+      </div>
+   </div>
+</div>
+<div class="overlay-dark-sidebar"></div>
+<div class="customizer-overlay"></div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
+<!-- inject:js-->
+<script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery/jquery-ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/accordion.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/autoComplete.js') }}"></script>
+<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicBadge.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicCheckbox.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fullcalendar@5.2.0.js') }}"></script>
+<script src="{{ url_for('static', filename='js/google-chart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-2.0.5.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.filterizr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.peity.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.star-rating-svg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.markercluster.js') }}"></script>
+<script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/message.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/muuri.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popover.js') }}"></script>
+<script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/trumbowyg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wickedpicker.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexmain.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drag-drop.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.js') }}"></script>
+<script src="{{ url_for('static', filename='js/full-calendar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/googlemap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/icon-loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jvectormap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!-- endinject-->
+
+
+<script>
+
+   $(document).ready(function () {
+
+      $('#password').val("{{ user.show_password }}");
+      $('#password').attr('type','text');
+
+      $('#password').click(function () {
+         $('#password').attr('type','password');
+
+      });
+
+      $('#total_work_hours').change(function() {
+         var totalWorkHoursInput = $('#total_work_hours');
+         var totalSalaryInput = $('#total_salary');
+         var salaryPerHourInput = $('#salary_per_hour');
+         
+         var totalWorkHoursValue = parseFloat(totalWorkHoursInput.val());
+         var salaryPerHourValue = parseFloat(salaryPerHourInput.val());
+         var totalSalaryValue = parseFloat(totalSalaryInput.val());
+
+         if (!isNaN(totalWorkHoursValue) && !isNaN(totalSalaryValue)) {
+            var salaryPerHour = totalSalaryValue / totalWorkHoursValue;
+            salaryPerHourInput.val(salaryPerHour.toFixed(2));
+         }
+      });
+
+      $('#total_salary').change(function() {
+         var totalWorkHoursInput = $('#total_work_hours');
+         var totalSalaryInput = $('#total_salary');
+         var salaryPerHourInput = $('#salary_per_hour');
+         
+         var totalWorkHoursValue = parseFloat(totalWorkHoursInput.val());
+         var salaryPerHourValue = parseFloat(salaryPerHourInput.val());
+         var totalSalaryValue = parseFloat(totalSalaryInput.val());
+
+         if (!isNaN(totalWorkHoursValue) && !isNaN(totalSalaryValue)) {
+            var salaryPerHour = totalSalaryValue / totalWorkHoursValue;
+            salaryPerHourInput.val(salaryPerHour.toFixed(2));
+         }
+      });
+
+      $('#break_hours').change(function() {
+         var totalBreakHours = $('#break_hours');
+         var workHoursPerDay = $('#per_day_work_hours');
+         
+         var totalBreakHoursValue = parseInt(totalBreakHours.val());
+         var workHoursPerDayValue = parseInt(workHoursPerDay.val());
+
+         if (!isNaN(totalBreakHoursValue) && !isNaN(workHoursPerDayValue)) {
+            var perDayworkHours = workHoursPerDayValue - totalBreakHoursValue;
+            workHoursPerDay.val(perDayworkHours);
+         }
+      });
+
+
+
+      $('#duty_starts').wickedpicker({"now": "{{ user.start_duty }}"});
+      $('#duty_ends').wickedpicker({"now": "{{ user.end_duty }}"});
+      $('#break_from').wickedpicker({"now": "{{ user.break_from }}"});
+      $('#break_to').wickedpicker({"now": "{{ user.break_to }}"});
+
+      var work_scheduleHtml = "{{ user.work_schedule }}";
+      var work_schedule = JSON.parse($('<div/>').html(work_scheduleHtml).text());
+      
+      $.each(work_schedule, function(index, day) {
+         $("." + day.toLowerCase()).prop('checked', true);
+      });
+
+      $("#userForm").submit(function() {
+
+         duty_starts=convertTime($('#duty_starts').wickedpicker('time'));
+         duty_ends=convertTime($('#duty_ends').wickedpicker('time'));
+         break_from=convertTime($('#break_from').wickedpicker('time'));
+         break_to=convertTime($('#break_to').wickedpicker('time'));
+        
+         $('#duty_starts').val(duty_starts);
+         $('#duty_ends').val(duty_ends);
+         $('#break_from').val(break_from);
+         $('#break_to').val(break_to);
+         
+         var sunday = $('.sunday').prop('checked');
+         var monday = $('.monday').prop('checked');
+         var tuesday = $('.tuesday').prop('checked');
+         var wednesday = $('.wednesday').prop('checked');
+         var thursday = $('.thursday').prop('checked');
+         var friday = $('.friday').prop('checked');
+         var saturday = $('.saturday').prop('checked');
+
+         var daysList = [];
+
+         var count = 0;
+
+         if (sunday) {
+            daysList.push("Sunday");
+            count++;
+         }
+         if (monday) {
+               daysList.push("Monday");
+               count++;
+         }
+         if (tuesday) {
+               daysList.push("Tuesday");
+               count++;
+         }
+         if (wednesday) {
+               daysList.push("Wednesday");
+               count++;
+         }
+         if (thursday) {
+               daysList.push("Thursday");
+               count++;
+         }
+         if (friday) {
+               daysList.push("Friday");
+               count++;
+         }
+         if (saturday) {
+               daysList.push("Saturday");
+               count++;
+         }
+
+         if (count === 0) {
+               alert('Select at least one day!');
+               event.preventDefault();
+         }
+
+         var daysJson = JSON.stringify(daysList);
+         $('#day_schedule').val(daysJson);
+      });
+
+      function convertTime(time) {
+         var parts = time.split(':');
+         var hours = parseInt($.trim(parts[0]));
+         parts = $.trim(parts[1]).split(' ');
+
+         var minute = parts[0];
+         
+         if (parts[1].toLowerCase() === 'pm' && hours !== 12) {
+            hours += 12;
+         } else if (parts[1].toLowerCase() === 'am' && hours === 12) {
+            hours = 0;
+         }
+
+         var formattedTime = hours.toString().padStart(2, '0') + ':' + minute;
+         
+         return formattedTime;
+      }
+
+      $("#image").on("change", function () {
+         var $input = $(this);
+         var reader = new FileReader();
+         reader.onload = function () {
+            $("#imageBox").attr("src", reader.result);
+         }
+         reader.readAsDataURL($input[0].files[0]);
+      });
+
+   });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% macro investigation_item(data, projectId) %}
+{% for item in data %}
+
+
+<tr>
+    <td>
+        <div class="d-flex align-items-center">
+
+            <div class="orderDatatable-title">
+                <p class="d-block mb-0">
+                    {{ item.Task.name }}
+                </p>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-status d-inline-block">
+            <span
+                class="order-bg-opacity-{{ 'secondary' if item.Task.type=='daily' or item.Task.type=='weekly' else 'warning' if item.Task.type=='monthly' else 'danger' if item.Task.type=='urgent' }}  text-{{ 'secondary' if item.Task.type=='daily' or item.Task.type=='weekly' else 'warning' if item.Task.type=='monthly' else 'danger' if item.Task.type=='urgent' }} rounded-pill active">{{
+                item.Task.type }}</span>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            {{ item.User.name }}
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            {{ item.User.mobile }}
+        </div>
+    </td>
+    {% if item.Task.type=="monthly" %}
+    <td>
+        {% set schedule = item.Task.schedule| parse_json %}
+        <div class="orderDatatable-title">
+            {{ schedule[0] }}
+        </div>
+    </td>
+    {% elif item.Task.type=="urgent" %}
+    <td>
+        <div class="orderDatatable-title">
+            {{ item.Task.schedule }}
+        </div>
+    </td>
+    {% else %}
+    <td>
+        <div class="orderDatatable-title">
+            -----
+        </div>
+    </td>
+    {% endif %}
+    <td>
+        <div class="orderDatatable-title">
+            {{ item.Task.end_time.strftime("%I:%M %p") }}
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-primary btn-default btn-rounded btn-xs px-15 ml-n3 view-description" data-description="{{ item.Task.note }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-info btn-default btn-rounded btn-xs px-15 view-description" data-description="{{ item.Task.complaint }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-secondary btn-default btn-rounded btn-xs px-15 view-image" data-path="{{ item.Task.image }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-success btn-default btn-rounded btn-xs px-15 view-video" data-path="{{ item.Task.video }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-primary btn-default btn-rounded btn-xs px-15 view-audio" data-path="{{ item.Task.voice }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+
+    <td>
+        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap float-end">
+            <li>
+                <div class="form-check form-switch form-switch-primary form-switch-sm" bis_skin_checked="1">
+                    <input type="checkbox" class="form-check-input status-change" data-id="{{ item.Investigation.id }}" id="switch-s2" {% if item.Investigation.status == 1 %}checked{% endif %}>
+                    <label class="form-check-label" for="switch-s2"></label>
+                </div>
+            </li>
+            <!-- <li>
+                <a href="#" class="view">
+                    <i class="uil uil-eye"></i>
+                </a>
+            </li> -->
+            <li>
+                <a class="remove deleteBtn" data-id="{{ item.Investigation.id }}" data-bs-toggle="modal" data-bs-target="#modal-info-delete">
+                    <i class="uil uil-trash-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </td>
+</tr>
+<!-- End: tr -->
+
+
+{% endfor %}
+{% endmacro %}

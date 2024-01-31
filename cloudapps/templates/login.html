@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>{{ title }}</title>
+
+   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+   <!-- inject:css-->
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/daterangepicker.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/footable.standalone.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/fullcalendar@5.2.0.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-jvectormap-2.0.5.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/line-awesome.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/MarkerCluster.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/MarkerCluster.Default.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/star-rating-svg.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/trumbowyg.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/wickedpicker.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+   <!-- endinject -->
+
+   <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon.png') }}">
+
+   <!-- Fonts -->
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+</head>
+
+<body>
+   <main class="main-content">
+      <div class="admin">
+         <div class="container-fluid">
+            <div class="row justify-content-center">
+               <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-8">
+                  <div class="edit-profile">
+                     <div class="card border-0">
+                        <div class="card-header">
+                           <div class="edit-profile__title">
+                              <h6>Sign in ProjectManagerPro</h6>
+                           </div>
+                        </div>
+                        <form class="card-body" method="post">
+                           {{ form.hidden_tag() }}
+                           <div class="edit-profile__body">
+                              <div class="form-group mb-25">
+                                 <label for="username">Email Address</label>
+                                 {{ form.email(id="username", class="form-control", placeholder="name@example.com") }}
+                                 <!-- <input type="text" class="form-control" id="username" name="username" placeholder="name@example.com"> -->
+                              </div>
+                              <div class="form-group mb-15">
+                                 <label for="password-field">password</label>
+                                 <div class="position-relative">
+                                    {{ form.password(id="password-field", class="form-control", placeholder="password") }}
+                                    <!-- <input id="password-field" type="password" class="form-control" name="password" placeholder="Password"> -->
+                                    <div class="uil uil-eye-slash text-lighten fs-15 field-icon toggle-password2">
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="admin-condition">
+                                 <div class="checkbox-theme-default custom-checkbox ">
+                                    {{ form.remember_me(class="checkbox", id="check-1") }}
+                                    <!-- <input class="checkbox" type="checkbox" id="check-1"> -->
+                                    <label for="check-1">
+                                       <span class="checkbox-text">Keep me logged in</span>
+                                    </label>
+                                 </div>
+                                 <!-- <a href="forget-password.html">forget password?</a> -->
+                              </div>
+                              {% with messages = get_flashed_messages(with_categories=True) %}
+                                 {% if messages %}
+                                    {% for category, message in messages %}
+                                    {% if category == 'logout' %}
+                                    <div class="alert-big alert alert-danger  alert-dismissible fade show " role="alert">
+
+
+                                       <div class="alert-content">
+
+                                          <h6 class='alert-heading'>Error !</h6>
+
+
+                                          <p>{{ message }}</p>
+
+
+                                          <button type="button" class="btn-close text-capitalize" data-bs-dismiss="alert" aria-label="Close">
+
+                                             <img src="{{ url_for('static', filename='img/svg/x.svg') }}" alt="x" class="svg" aria-hidden="true">
+
+                                          </button>
+
+                                       </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                 {% endif %}
+                           {% endwith %}
+                              <div class="admin__button-group button-group d-flex pt-1 justify-content-md-start justify-content-center mt-10">
+                                 {{ form.submit(class="btn btn-primary btn-default w-100 btn-squared text-capitalize lh-normal px-50 signIn-createBtn") }}
+                                 <!-- <button class="btn btn-primary btn-default w-100 btn-squared text-capitalize lh-normal px-50 signIn-createBtn ">
+                                    sign in
+                                 </button> -->
+                              </div>
+                           </div>
+                        </form><!-- End: .card-body -->
+                        <!-- <div class="px-20">
+                           <p class="social-connector social-connector__admin text-center">
+                              <span>Or</span>
+                           </p>
+                           <div class="button-group d-flex align-items-center justify-content-center">
+                              <ul class="admin-socialBtn">
+                                 <li>
+                                    <button class="btn text-dark google">
+                                       <img class="svg" src="{{ url_for('static', filename='img/google-Icon.svg') }}" alt="img" />
+                                    </button>
+                                 </li>
+                                 <li>
+                                    <button class=" radius-md wh-48 content-center facebook">
+                                       <i class="uil uil-facebook-f"></i>
+                                    </button>
+                                 </li>
+                                 <li>
+                                    <button class="radius-md wh-48 content-center twitter">
+                                       <i class="uil uil-twitter"></i>
+                                    </button>
+                                 </li>
+                                 <li>
+                                    <button class="radius-md wh-48 content-center github">
+                                       <i class="uil uil-github"></i>
+                                    </button>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="admin-topbar">
+                           <p class="mb-0">
+                              Don't have an account?
+                              <a href="sign-up.html" class="color-primary">
+                                 Sign up
+                              </a>
+                           </p>
+                        </div>End: .admin-topbar  -->
+                     </div><!-- End: .card -->
+                  </div><!-- End: .edit-profile -->
+               </div><!-- End: .col-xl-5 -->
+            </div>
+         </div>
+      </div><!-- End: .admin-element  -->
+
+        
+   </main>
+   <div id="overlayer">
+      <div class="loader-overlay">
+         <div class="dm-spin-dots spin-lg">
+            <span class="spin-dot badge-dot dot-primary"></span>
+            <span class="spin-dot badge-dot dot-primary"></span>
+            <span class="spin-dot badge-dot dot-primary"></span>
+            <span class="spin-dot badge-dot dot-primary"></span>
+         </div>
+      </div>
+   </div>
+   <div class="enable-dark-mode dark-trigger">
+      <ul>
+         <li>
+            <a href="#">
+               <i class="uil uil-moon"></i>
+            </a>
+         </li>
+      </ul>
+   </div>
+   <!-- inject:js-->
+
+   <script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery/jquery-ui.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/bootstrap/popper.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/moment/moment.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/accordion.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/autoComplete.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/dynamicBadge.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/dynamicCheckbox.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/footable.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/fullcalendar@5.2.0.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/google-chart.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery-jvectormap-2.0.5.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery-jvectormap-world-mill-en.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery.filterizr.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery.peity.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jquery.star-rating-svg.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/leaflet.markercluster.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/message.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/muuri.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/popover.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/trumbowyg.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/wickedpicker.min.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/apexmain.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/drag-drop.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/footable.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/full-calendar.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/googlemap-init.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/icon-loader.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/jvectormap-init.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/leaflet-init.js') }}"></script>
+
+   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+   <!-- endinject-->
+</body>
+
+</html>

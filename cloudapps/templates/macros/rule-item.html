@@ -1,0 +1,75 @@
+{% macro rule_item(data) %}
+{% for item in data %}
+
+
+<tr>
+    <td>
+        <div class="d-flex align-items-center">
+
+            <div class="orderDatatable-title">
+                <p class="d-block mb-0">
+                    {{ item.name }}
+                </p>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-secondary btn-default btn-rounded btn-xs px-15 view-description" data-description="{{ item.description }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-secondary btn-default btn-rounded btn-xs px-15 view-image" data-path="{{ item.image }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-success btn-default btn-rounded btn-xs px-15 view-video" data-path="{{ item.video }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+    <td>
+        <div class="orderDatatable-title">
+            <button class="btn btn-primary btn-default btn-rounded btn-xs px-15 view-audio" data-path="{{ item.voice }}" data-bs-toggle="modal" data-bs-target="#modal-info">
+                View
+            </button>
+        </div>
+    </td>
+
+    <td>
+        <ul class="orderDatatable_actions mb-0 d-flex flex-wrap float-end">
+            <li>
+                <div class="form-check form-switch form-switch-primary form-switch-sm" bis_skin_checked="1">
+                    <input type="checkbox" class="form-check-input status-change" data-id="{{ item.id }}" id="switch-s2" {% if item.status == 1 %}checked{% endif %}>
+                    <label class="form-check-label" for="switch-s2"></label>
+                </div>
+            </li>
+            <!-- <li>
+                <a href="#" class="view">
+                    <i class="uil uil-eye"></i>
+                </a>
+            </li> -->
+            <li>
+                <a href="{{ url_for('routes.edit_rule', ruleId=item.id) }}" class="edit ml-3">
+                    <i class="uil uil-edit"></i>
+                </a>
+            </li>
+            <li>
+                <a class="remove deleteBtn" data-id="{{ item.id }}" data-bs-toggle="modal" data-bs-target="#modal-info-delete">
+                    <i class="uil uil-trash-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </td>
+</tr>
+<!-- End: tr -->
+
+
+{% endfor %}
+{% endmacro %}

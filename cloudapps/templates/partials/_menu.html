@@ -1,0 +1,95 @@
+<div class="sidebar-wrapper">
+    <div class="sidebar sidebar-collapse" id="sidebar">
+       <div class="sidebar__menu-group">
+          <ul class="sidebar_nav">
+             <li>
+                <div class="">
+                    <img src="{{ url_for('static', filename=session['avatar']) }}" id="avatar" alt="" class="nav-icon rounded-circle w-25 mx-auto d-block mb-10">
+                    <span class="menu-text mx-auto d-flex justify-content-center align-items-center fs-5">{{ session['name'] }}</span>
+                </div>
+             </li>
+             <li class="mt-30">
+                <a href="{{ url_for('routes.dashboard') }}" class="">
+                   <span class="nav-icon uil uil-create-dashboard"></span>
+                   <span class="menu-text">Dashboard</span>
+                </a>
+             </li>
+             <li class="has-child">
+                <a href="#" class="">
+                   <span class="nav-icon uil uil-window-section"></span>
+                   <span class="menu-text">Layouts</span>
+                   <span class="toggle-icon"></span>
+                </a>
+                <ul>
+                   <li class="l_sidebar">
+                      <a href="{{ url_for('routes.update_mode', mode='light') }}">Light Mode</a>
+                   </li>
+                   <li class="l_sidebar">
+                      <a href="{{ url_for('routes.update_mode', mode='dark') }}">Dark Mode</a>
+                   </li>
+                </ul>
+             </li>
+             {% if session['role']=='superadmin' %}
+             <li>
+                <a href="{{ url_for('routes.admin_list') }}" class="mt-30">
+                   <span class="nav-icon uil uil-chat"></span>
+                   <span class="menu-text">Admin</span>
+                </a>
+             </li>
+             <li>
+                <a href="{{ url_for('routes.project_list') }}" class="mb-25">
+                   <span class="nav-icon uil uil-chat"></span>
+                   <span class="menu-text">Projects</span>
+                </a>
+             </li>
+             {% endif %}
+             {% for item in projects %}
+             <li class="has-child {{ 'open' if session['current_project_open']==item.id else '' }}">
+                <a href="#" class="{{ 'mt-30' if session['role']!='superadmin' else '' }}">
+                   <span class="nav-icon uil uil-bag"></span>
+                   <span class="menu-text text-initial">{{ item.name }}</span>
+                   <span class="toggle-icon"></span>
+                </a>
+                <ul>
+                  {% if session['role'] != 'manager' %}
+                   <li class="">
+                      <a href="{{ url_for('routes.manager_list', projectid=item.id) }}">Manager</a>
+                   </li>
+                   {% endif %}
+                   <li class="">
+                      <a href="{{ url_for('routes.user_list', projectId=item.id) }}">User</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.investigation_list', projectId=item.id) }}">Investigation</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.tasker_list', projectId=item.id) }}">Taskers List</a>
+                   </li>
+                   <li class="">
+                    <a href="{{ url_for('routes.tasks_list', projectId=item.id, type='daily') }}">Daily Task</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.tasks_list', projectId=item.id, type='weekly') }}">Weekly Task</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.tasks_list', projectId=item.id, type='monthly') }}">Monthly & Yearly Task</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.tasks_list', projectId=item.id, type='urgent') }}">Urgent Task</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.training_list', projectId=item.id) }}">Trainings</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.rules_list', projectId=item.id) }}">Rules</a>
+                   </li>
+                   <li class="">
+                      <a href="{{ url_for('routes.payroll', projectId=item.id) }}">Pay Roll</a>
+                   </li>
+                </ul>
+             </li>
+             {% endfor %}
+          </ul>
+       </div>
+    </div>
+ </div>

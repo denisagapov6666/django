@@ -1,0 +1,44 @@
+{% macro section_card(data, type, projectId) %}
+{% for item in data %}
+
+<div class="col-xl-3 mb-25">
+    <div class="card contact-card">
+        <div class="card-body text-center pt-15 px-25 pb-0">
+
+            <div class="text-start">
+                <span class="dm-tag tag-{{ 'primary' if type=='daily' else 'secondary' if type=='weekly' else 'success' if type=='monthly' else 'warning' if type=='urgent' }} ">{{ type.upper() }}</span>
+            </div>
+
+            <div class="card__more-action dropdown dropdown-click">
+                <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <img src="{{ url_for('static', filename='img/svg/more-horizontal.svg') }}" alt="more-horizontal"
+                        class="svg">
+                </button>
+                <div class="dropdown-default dropdown-bottomLeft dropdown-menu-right dropdown-menu">
+                    <a class="dropdown-item editBtn" data-id="{{ item.Section.id }}" data-bs-toggle="modal" data-bs-target="#add-section">edit</a>
+                    <a class="dropdown-item deleteBtn" data-id="{{ item.Section.id }}" data-bs-toggle="modal" data-bs-target="#modal-info-delete">delete</a>
+                </div>
+            </div>
+
+            <div class="contact-profile-card text-center mt-25">
+                <div class="cp-info">
+                    <h6 class="cp-info__title fs-5">{{ item.Section.name }}</h6>
+                    <!-- <span class="cp-info__designation">User Interface Designer</span> -->
+                </div>
+            </div>
+
+            <div class="card-footer mt-20 pt-20 pb-20 px-0 bg-transparent">
+                <div class="text-center">
+                    <p class="fw-700 fs-5">{{ item.task_count }} Tasks</p>
+                    <a class="btn btn-info btn-default btn-sm btn-rounded px-15 mx-auto mt-30" href="{{ url_for('routes.checklist_tasks', projectId=projectId, sectionId=item.Section.id) }}">Open section</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: card -->
+</div>
+<!-- ends: col-xl-3 -->
+
+{% endfor %}
+{% endmacro %}

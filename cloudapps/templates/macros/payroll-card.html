@@ -1,0 +1,18 @@
+{% macro payroll_card(data) %}
+
+{% for item in data %}
+
+<div class="col-xl-2 stretch-card mb-3" bis_skin_checked="1">
+    <div class="card bg-black text-white" bis_skin_checked="1">
+       <div class="card-body payroll" bis_skin_checked="1">
+          <h6 class="card-text text-white">{{ item.name }}</h6>
+          <h2 class="mb-2 text-white">{{ item.total_salary }}</h2>
+          <p class="card-text">LESS: {{ 0 if item.remain_hours < 0 else item.remain_hours|abs }}</p>
+          <p class="card-text">OVER: {{ 0 if item.remain_hours > 0 else item.remain_hours|abs }}</p>
+          <p class="card-text">HOURS: {{ item.total_worked_hours }}</p>
+       </div>
+    </div>
+ </div>
+
+ {% endfor %}
+{% endmacro %}

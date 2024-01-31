@@ -1,0 +1,729 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class="contents">
+
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="d-flex align-items-center user-member__title mb-30 mt-30">
+               <h4 class="text-capitalize">edit task</h4>
+            </div>
+         </div>
+      </div>
+
+      <div class="card mb-50">
+         <div class="row justify-content-center">
+            <div class="col-md-5 col-10">
+               <div class="mt-40 mb-50">
+                  <form method="post" id="taskForm" enctype="multipart/form-data">
+                     {{ form.taskId(id="taskId", value=task.id) }}
+
+                     {{ form.hidden_tag() }}
+
+                     <div class="edit-profile__body">
+                        <div class="form-group mb-25">
+                           <label for="name1">task name</label>
+                           <div class="with-icon">
+                              <span class="la-user las"></span>
+                              {{ form.name(id="name", class="form-control input-with-icon", placeholder="Duran Clayton", value=task.name) }}
+                           </div>
+                        </div>
+                        <div class="form-group form-element-textarea mb-20" bis_skin_checked="1">
+                           <label for="description" class="il-gray fs-14 fw-500 align-center mb-10">Description</label>
+                           {{ form.description(id="description", class="form-control", placeholder="description", **{"rows": 5}) }}
+                        </div>
+                       
+                       
+                       <div class="form-group form-element-textarea mb-20" id="sub-description-group" bis_skin_checked="1">
+                         <div class="row mb-20">
+                           
+                           <div class="col-6">
+                             	<label for="Sub Description" class="il-gray fs-14 fw-500 align-center mb-10">Sub Description</label>
+
+                           </div>
+                           
+                           <div class="col-6">
+                                <button type="button" class="btn btn-info btn-default btn-squared fs-12" id="add-sub-description" style="height: 35px;">Add More +</button>
+
+                           </div>
+                         
+                         </div>
+                         
+                         
+                         {% for name in sub_description %}
+                              <div class="row mb-20 sub-desc-row">
+                                  <div class="col-9">
+                                      <input type="text" class="form-control w-100 form-control-sm sub-desc" style="height: 40px;" value="{{ name }}" placeholder="Sub description"/>
+                                  </div>
+                                  <div class="col-3">
+                                      <button type="button" class="btn btn-default btn-squared color-danger btn-outline-danger fs-12 deleteSubDesc" style="height: 38px;">Delete</button>
+                                  </div>
+                              </div>
+                          {% endfor %}
+                           
+                         
+                         {{ form.sub_description(id="sub_description", class="form-control input-with-icon d-none") }}
+
+                        </div>
+
+                        <div class="row mb-40">
+                           <div class="col-md-6">
+                              <div class="form-group" bis_skin_checked="1">
+                                 <label for="start_time">Start time</label>
+                                 <div class="time-picker" bis_skin_checked="1">
+                                    <div class="input-container icon-right position-relative w-100 color-light "
+                                       bis_skin_checked="1">
+                                       <span class="input-icon icon-right">
+                                          <span class="la-hourglass-start las"></span>
+                                       </span>
+                                       {{ form.start_time(id="start_time", class="form-control ih-medium ip-light radius-xs b-light px-15 hasWickedpicker time-picker-new", placeholder="12:00 AM", **{"aria-showingpicker":"false", "tabindex":"0", "onkeypress":"return false;"}) }}
+
+                                       <!-- <input type="text"
+                                          class="form-control ih-medium ip-light radius-xs b-light px-15 color-lighten hasWickedpicker"
+                                          id="time-picker" placeholder="12:00 AM" onkeypress="return false;"
+                                          aria-showingpicker="false" tabindex="0"> -->
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <label for="end_time">End time</label>
+                                 <div class="time-picker" bis_skin_checked="1">
+                                    <div class="input-container icon-right position-relative w-100 color-light "
+                                       bis_skin_checked="1">
+                                       <span class="input-icon icon-right">
+                                          <span class="la-hourglass-end las"></span>
+                                       </span>
+                                       {{ form.end_time(id="end_time", class="form-control ih-medium ip-light radius-xs b-light px-15 hasWickedpicker time-picker-new", placeholder="12:00 PM", **{"aria-showingpicker":"false", "tabindex":"0", "onkeypress":"return false;"}) }}
+
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        {{ form.schedule(id="schedule") }}
+                        {% if type=="daily" or type=="weekly" %}
+                        {% if type == "weekly" %}
+                           {% set key = "Every" %}
+                        {% else %}
+                           {% set key = "" %}
+                        {% endif %}
+
+                        <div class="text-center" bis_skin_checked="1">
+                           <label class="text-dark fs-7 fw-500">Day Schedule</label>
+                           <div class="mb-3 mt-20" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox sunday" type="checkbox" id="check-un1">
+                                 <label for="check-un1">
+                                    <span class="checkbox-text text-dark">
+                                       {{ key }} Sunday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox monday" type="checkbox" id="check-un2">
+                                 <label for="check-un2">
+                                    <span class="checkbox-text text-dark">
+                                       {{ key }} Monday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox tuesday" type="checkbox" id="check-un3">
+                                 <label for="check-un3">
+                                    <span class="checkbox-text text-dark">
+                                       {{ key }} Tuesday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox wednesday" type="checkbox" id="check-un4">
+                                 <label for="check-un4">
+                                    <span class="checkbox-text text-dark">
+                                       {{ key }} Wednesday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox thursday" type="checkbox" id="check-un5">
+                                 <label for="check-un5">
+                                    <span class="checkbox-text text-dark">
+                                       {{ key }} Thursday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox friday" type="checkbox" id="check-un6">
+                                 <label for="check-un6">
+                                    <span class="checkbox-text text-dark">
+                                       {{ key }} Friday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                           <div class="mb-3" bis_skin_checked="1">
+                              <div class="checkbox-theme-default custom-checkbox " bis_skin_checked="1">
+                                 <input class="checkbox saturday" type="checkbox" id="check-un7">
+                                 <label for="check-un7">
+                                    <span class="checkbox-text text-dark">
+                                       {{ key }} Saturday
+                                    </span>
+                                 </label>
+                              </div>
+                           </div>
+                        </div>
+                        {% elif type=='monthly' %}
+                        <div class="row mb-30" bis_skin_checked="1">
+                           <label class="text-dark fs-7 fw-500 mb-25">Date Schedule</label>
+
+                           <div class="col-md-6 date-picker-list" bis_skin_checked="1">
+                              <div class="dm-date-picker">
+                                 <div class="form-group mb-0 form-group-calender">
+                                    <div class="position-relative">
+                                       <input type="text" class="form-control form-control-default text-dark"
+                                          id="datepicker-new" placeholder="Select Date">
+                                       <a href="#"><img class="svg"
+                                             src="{{ url_for('static', filename='img/svg/calendar.svg') }}"
+                                             alt="calendar"></a>
+                                    </div>
+                                 </div>
+
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <button class="btn btn-secondary btn-default btn-rounded btn-sm mx-auto mt-10"
+                                 type="button" id="addDate">
+                                 <span class="la-plus-circle las"></span>
+                                 Add
+                              </button>
+                           </div>
+
+                        </div>
+
+                        <div class="list-box mx-auto col-4" bis_skin_checked="1">
+                           <ul id="dateCollection">
+                           </ul>
+                        </div>
+
+                        {% elif type=='urgent' %}
+                        <label class="text-dark fs-7 fw-500 mb-25">Date</label>
+
+                           <div class="dm-date-picker mb-25">
+                              <div class="form-group mb-0 form-group-calender">
+                                 <div class="position-relative">
+                                    <input type="text" class="form-control form-control-default text-dark urgent-date"
+                                       id="datepicker-new" placeholder="Select Date">
+                                    <a href="#"><img class="svg"
+                                          src="{{ url_for('static', filename='img/svg/calendar.svg') }}"
+                                          alt="calendar"></a>
+                                 </div>
+                              </div>
+
+                           </div>
+
+
+                        {% endif %}
+                       
+                         
+                      <div class="row mt-50">
+                        
+                        <div class="col-4">
+                          <div class="dm-upload" bis_skin_checked="1">
+                            <div class="dm-upload__button" bis_skin_checked="1">
+                              <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload-2').click()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg replaced-svg">
+                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                  <polyline points="17 8 12 3 7 8"></polyline>
+                                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg> <span class="fs-10"> Upload Image </span>
+                              </a>
+                              
+                              {{ form.image_file(id="upload-2", class="upload-one", **{"type":"file", "accept":"image/*"}) }}
+                            </div>
+                            <div class="dm-upload__file_1" bis_skin_checked="1">
+                              <ul id="image-container">
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                        <div class="col-4">
+                          <div class="dm-upload" bis_skin_checked="1">
+                            <div class="dm-upload__button" bis_skin_checked="1">
+                              <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload-3').click()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg replaced-svg">
+                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                  <polyline points="17 8 12 3 7 8"></polyline>
+                                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg> <span class="fs-10"> Upload Video </span>
+                              </a>
+                              {{ form.video_file(id="upload-3", class="upload-one", **{"type":"file", "accept":"video/*"}) }}
+                            </div>
+                            <div class="dm-upload__file_2" bis_skin_checked="1">
+                              <ul id="video-container">
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="col-4">
+                          <div class="dm-upload" bis_skin_checked="1">
+                            <div class="dm-upload__button" bis_skin_checked="1">
+                              <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload-4').click()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg replaced-svg">
+                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                  <polyline points="17 8 12 3 7 8"></polyline>
+                                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg> <span class="fs-10"> Upload Voice </span>
+                              </a>
+                              {{ form.voice_file(id="upload-4", class="upload-one", **{"type":"file", "accept":"audio/*"}) }}
+                            </div>
+                            <div class="dm-upload__file_3" bis_skin_checked="1">
+                              <ul id="voice-container">
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="col-4 mt-2">
+                          <div class="dm-upload" bis_skin_checked="1">
+                            <div class="dm-upload__button" bis_skin_checked="1">
+                              <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload-5').click()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg replaced-svg">
+                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                  <polyline points="17 8 12 3 7 8"></polyline>
+                                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg> Upload File
+                              </a>
+                              {{ form.file_upload(id="upload-5", class="upload-one", **{"type":"file"}) }}
+                            </div>
+                            <div class="dm-upload__file_4" bis_skin_checked="1">
+                              <ul id="file-container">
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                       
+                       
+
+                        <div class="button-group d-flex pt-25 justify-content-md-end justify-content-start">
+                           
+                           {{ form.submit(class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2 btn-sm", id="submitBtn") }}
+
+                        </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+</div>
+
+</main>
+<div id="overlayer">
+   <div class="loader-overlay">
+      <div class="dm-spin-dots spin-lg">
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+      </div>
+   </div>
+</div>
+<div class="overlay-dark-sidebar"></div>
+<div class="customizer-overlay"></div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
+<!-- inject:js-->
+<script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery/jquery-ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/accordion.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/autoComplete.js') }}"></script>
+<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicBadge.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicCheckbox.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fullcalendar@5.2.0.js') }}"></script>
+<script src="{{ url_for('static', filename='js/google-chart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-2.0.5.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.filterizr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.peity.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.star-rating-svg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.markercluster.js') }}"></script>
+<script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/message.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/muuri.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popover.js') }}"></script>
+<script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/trumbowyg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wickedpicker.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexmain.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drag-drop.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.js') }}"></script>
+<script src="{{ url_for('static', filename='js/full-calendar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/googlemap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/icon-loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jvectormap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!-- endinject-->
+
+
+<script>
+
+   $(document).ready(function () {
+      var description = "{{ task.description.rstrip() }}";
+      $('#description').val(description);
+
+      $('#start_time').wickedpicker({"now": "{{ task.start_time }}"});
+      $('#end_time').wickedpicker({"now": "{{ task.end_time }}"});
+
+      var type = "{{ type }}";
+
+      if (type=="daily" || type=="weekly") {
+         var scheduleHtml = "{{ task.schedule }}";
+         var schedule = JSON.parse($('<div/>').html(scheduleHtml).text());
+      
+         $.each(schedule, function(index, day) {
+            $("." + day.toLowerCase()).prop('checked', true);
+         });
+      }
+      else if (type == "monthly") {
+         var scheduleStr = '{{ task.schedule | safe }}';
+         var schedule = JSON.parse(scheduleStr);
+
+         $.each(schedule, function(index, date) {
+            var listItem = $('<li class="list-box__item">').text(date);
+            $('#dateCollection').append(listItem);
+
+            var schedule = $('#schedule');
+            
+            var dateList = schedule.val();
+
+            if (dateList !== '') {
+               schedule.val(dateList + ',' + '"' + date + '"');
+            } else {
+               schedule.val('"' + date + '"');
+            }
+         });
+      }
+
+
+      
+
+      $('#datepicker-new').datepicker();
+
+      if (type=="urgent") {
+         $('.urgent-date').datepicker("setDate","{{ task.schedule }}");
+      }
+
+      $('#addDate').click(function() {
+         var date = $('#datepicker-new').datepicker({ dateFormat: 'dd,MM,yyyy' }).val();
+         if (date != null) {
+            
+            var listItem = $('<li class="list-box__item">').text(date);
+            $('#dateCollection').append(listItem);
+            var schedule = $('#schedule');
+            var dateList = schedule.val();
+
+            if (dateList !== '') {
+               schedule.val(dateList + ',' + '"' + date + '"');
+            } else {
+               schedule.val('"' + date + '"');
+            }
+         }
+      });
+
+      $("#taskForm").submit(function() {
+
+         start_time=convertTime($('#start_time').wickedpicker('time'));
+         end_time=convertTime($('#end_time').wickedpicker('time'));
+
+        
+         $('#start_time').val(start_time);
+         $('#end_time').val(end_time);
+
+         var type = "{{ type }}";
+
+         
+
+         if (type == 'daily' || type == 'weekly') {
+            var sunday = $('.sunday').prop('checked');
+            var monday = $('.monday').prop('checked');
+            var tuesday = $('.tuesday').prop('checked');
+            var wednesday = $('.wednesday').prop('checked');
+            var thursday = $('.thursday').prop('checked');
+            var friday = $('.friday').prop('checked');
+            var saturday = $('.saturday').prop('checked');
+
+            var daysList = [];
+
+            var count = 0;
+
+            if (sunday) {
+               daysList.push("Sunday");
+               count++;
+            }
+            if (monday) {
+               daysList.push("Monday");
+               count++;
+            }
+            if (tuesday) {
+               daysList.push("Tuesday");
+               count++;
+            }
+            if (wednesday) {
+               daysList.push("Wednesday");
+               count++;
+            }
+            if (thursday) {
+               daysList.push("Thursday");
+               count++;
+            }
+            if (friday) {
+               daysList.push("Friday");
+               count++;
+            }
+            if (saturday) {
+               daysList.push("Saturday");
+               count++;
+            }
+
+            if (count === 0) {
+               alert('Select at least one day!');
+               event.preventDefault();
+            }
+
+            var daysJson = JSON.stringify(daysList);
+            $('#schedule').val(daysJson);
+         }
+         else if (type=="monthly")
+         {
+            var schedule=$('#schedule').val();
+            schedule = "["+schedule+"]";
+            
+            $('#schedule').val(schedule);
+            
+         }
+         else if (type=="urgent")
+         {
+            var date = $('.urgent-date').datepicker({ dateFormat: 'dd,MM,yyyy' }).val();
+            
+            $('#schedule').val(date);
+         }
+        
+        
+        var subDescArray = [];
+
+        var elements = $(".sub-desc-row");
+
+        elements.each(function(index) {
+          sub_desc = $(this).find('.sub-desc').val();
+
+          subDescArray.push(sub_desc); 
+        });
+
+        $("#sub_description").attr("value", JSON.stringify(subDescArray));
+        
+      });
+
+      function convertTime(time) {
+         var parts = time.split(':');
+         var hours = parseInt($.trim(parts[0]));
+         parts = $.trim(parts[1]).split(' ');
+
+         var minute = parts[0];
+         
+         if (parts[1].toLowerCase() === 'pm' && hours !== 12) {
+            hours += 12;
+         } else if (parts[1].toLowerCase() === 'am' && hours === 12) {
+            hours = 0;
+         }
+
+         var formattedTime = hours.toString().padStart(2, '0') + ':' + minute;
+         
+         return formattedTime;
+      }
+     
+     
+     $("#add-sub-description").click(function() {
+       
+       //sub_desc++;
+       
+       //console.log(sub_desc);
+       
+       var newHtml = '<div class="row mb-20 sub-desc-row">' +
+                          '<div class="col-9">' +
+                              '<input type="text" class="form-control w-100 form-control-sm sub-desc" style="height: 40px;" placeholder="Sub description"/>' +
+                          '</div>' +
+                          '<div class="col-3">' +
+                              '<button type="button" class="btn btn-default btn-squared color-danger btn-outline-danger fs-12 deleteSubDesc" style="height: 38px;">Delete</button>' +
+                          '</div>' +
+                      '</div>';
+       
+        $("#sub-description-group").append(newHtml);
+       
+     });
+    	
+     $("#sub-description-group").on("click", ".deleteSubDesc", function() {
+          $(this).closest('.sub-desc-row').remove();
+       	  //sub_desc--;
+       	  //console.log(sub_desc);
+      });
+     
+     
+     
+     
+     $('#upload-2').change(function () {
+            var file = this.files[0];
+            
+            if (file) {
+              
+              	$('#image-container').empty();
+              
+              
+              	var trimmedFileName = file.name.length > 8 ? file.name.substring(0, 8) + '...' : file.name;
+              
+                var listItem = '<li><a href="#" class="file-name"><i class="las la-paperclip"></i> <span class="name-text">' + trimmedFileName + '<span></span></span></a>' +
+                               '<a class="btn-delete" data-file-name="' + file.name + '"><i class="la la-trash"></i></a></li>';
+
+                $('#image-container').append(listItem);
+            }
+        });
+     
+     
+     $(document).on('click', '.btn-delete', function () {
+            var fileName = $(this).data('file-name');
+            
+            $(this).closest('li').remove();
+
+            $('#upload-2').val('');
+        });
+     
+     
+     
+     $('#upload-3').change(function () {
+            var file = this.files[0];
+            
+            if (file) {
+              
+              	$('#video-container').empty();
+             	
+              	var trimmedFileName = file.name.length > 8 ? file.name.substring(0, 8) + '...' : file.name;
+              
+                var listItem = '<li><a href="#" class="file-name"><i class="las la-paperclip"></i> <span class="name-text">' + trimmedFileName + '<span></span></span></a>' +
+                               '<a class="btn-delete" data-file-name="' + file.name + '"><i class="la la-trash"></i></a></li>';
+
+                $('#video-container').append(listItem);
+            }
+        });
+     
+     
+     $(document).on('click', '.btn-delete', function () {
+            var fileName = $(this).data('file-name');
+            
+            $(this).closest('li').remove();
+
+            $('#upload-3').val('');
+        });
+
+     
+     $('#upload-4').change(function () {
+            var file = this.files[0];
+            
+            if (file) {
+              
+              	$('#voice-container').empty();
+              
+              	var trimmedFileName = file.name.length > 8 ? file.name.substring(0, 8) + '...' : file.name;
+              
+                var listItem = '<li><a href="#" class="file-name"><i class="las la-paperclip"></i> <span class="name-text">' + trimmedFileName + '<span></span></span></a>' +
+                               '<a class="btn-delete" data-file-name="' + file.name + '"><i class="la la-trash"></i></a></li>';
+
+                $('#voice-container').append(listItem);
+            }
+        });
+     
+     
+     $(document).on('click', '.btn-delete', function () {
+            var fileName = $(this).data('file-name');
+            
+            $(this).closest('li').remove();
+
+            $('#upload-4').val('');
+        });
+     
+     $('#upload-5').change(function () {
+            var file = this.files[0];
+            
+            if (file) {
+              
+              	$('#file-container').empty();
+              
+              	var trimmedFileName = file.name.length > 8 ? file.name.substring(0, 8) + '...' : file.name;
+              
+                var listItem = '<li><a href="#" class="file-name"><i class="las la-paperclip"></i> <span class="name-text">' + trimmedFileName + '<span></span></span></a>' +
+                               '<a class="btn-delete" data-file-name="' + file.name + '"><i class="la la-trash"></i></a></li>';
+
+                $('#file-container').append(listItem);
+            }
+        });
+     
+     
+     $(document).on('click', '.btn-delete', function () {
+            var fileName = $(this).data('file-name');
+            
+            $(this).closest('li').remove();
+
+            $('#upload-5').val('');
+        });
+
+   });
+
+</script>
+
+{% endblock %}

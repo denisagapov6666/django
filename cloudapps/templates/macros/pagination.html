@@ -1,0 +1,15 @@
+{% macro render_pagination(pagination, endpoint, projectId, sectionId) %}
+  <div class=pagination>
+  {%- for page in pagination.iter_pages() %}
+    {% if page %}
+      {% if page != pagination.page %}
+        <a href="{{ url_for(endpoint, projectId=projectId, sectionId=sectionId, page=page) }}" class="dm-pagination__link"><span class="page-number">{{ page }}</span></a>
+      {% else %}
+        <a class="dm-pagination__link active"><span class="page-number">{{ page }}</span></a>
+      {% endif %}
+    {% else %}
+        <a href="#" class="dm-pagination__link pagination-control"><span class="page-number">...</span></a>
+    {% endif %}
+  {%- endfor %}
+  </div>
+{% endmacro %}

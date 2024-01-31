@@ -1,0 +1,22 @@
+{% macro dashboard_card(data) %}
+{% for item in data %}
+<div class="col-xxl-6 col-sm-3 mb-25">
+    <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
+       <div class="overview-content w-100">
+          <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
+             <div class="ap-po-details__titlebar">
+                <h1>{{ item.count }}</h1>
+                <p class="fw-500 mt-10 fs-5">{{ item.name }}</p>
+             </div>
+             <div class="ap-po-details__icon-area">
+                <div class="svg-icon order-bg-opacity-primary color-{{ item.color }}">
+
+                   <i class="uil {{ item.icon }}"></i>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+{% endfor %}
+ {% endmacro %}

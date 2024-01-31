@@ -1,0 +1,27 @@
+{% macro admin_card(data) %}
+{% for item in data %}
+<div class="col-md-6 col-sm-12 mb-20">
+    <div class="media  py-30  ps-30 pe-20 bg-white radius-xl users-list ">
+       <img class=" me-20 rounded-circle wh-80 bg-opacity-primary  image" src="{{ url_for('static', filename=item.avatar) }}" alt="Generic placeholder image">
+       <div class="media-body d-xl-flex users-list-body">
+          <div class="flex-1 pe-xl-30 users-list-body__title">
+             <h6 class="mt-0 fw-500">{{ item.name }} </h6>
+             <span>{{ item.role }}</span>
+             <p class="fw-bold fs-5 mt-10">Contact</p>
+             <p class="fs-6 mt-n20">{{ item.email }}</p>
+             <p class="fs-6 mt-n30">{{ item.mobile }}</p>
+             <div class="users-list-body__bottom">
+                <span class="media-badge {{ 'bg-success' if item.status == 1 else 'bg-danger' }} rounded-circle p-10"> </span>
+             </div>
+          </div>
+          <div class="users-list__button mt-xl-0 mt-15">
+             <button data-id="{{ item.id }}" data-bs-toggle="modal" data-bs-target="#new-member" class="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow editBtn">Edit Admin
+             </button>
+             <button type="button" data-id="{{ item.id }}" class="btn-danger border text-capitalize px-25 shadow2 follow my-xl-0 radius-md deleteBtn" data-bs-toggle="modal" data-bs-target="#modal-info-delete">
+               Delete</button>
+          </div>
+       </div>
+    </div>
+ </div>
+ {% endfor %}
+ {% endmacro %}

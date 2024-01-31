@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block extrastyles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}"> {% endblock %}
+{% block content %}
+
+<div class="contents w-105 ml-n20 mt-n10">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-12">
+            
+         </div>
+      </div>
+   </div>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="userDatatable orderDatatable global-shadow py-30 px-sm-30 px-20 radius-xl w-100 mb-30">
+               <div class="project-top-wrapper d-flex justify-content-between flex-wrap mb-25 mt-n10">
+                  <div class="d-flex align-items-center flex-wrap justify-content-center">
+                     <div class="project-search order-search  global-shadow mt-10">
+                        <!-- <form action="/" class="order-search__form">
+                                 <img src="{{ url_for('static', filename='img/svg/search.svg') }}" alt="search" class="svg">
+                                 <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Filter by keyword" aria-label="Search">
+                              </form> -->
+                     </div><!-- End: .project-search -->
+                  </div><!-- End: .d-flex -->
+                  <div class="content-center mt-10">
+                  </div><!-- End: .content-center -->
+               </div><!-- End: .project-top-wrapper -->
+
+               <div class="content-wrapper " bis_skin_checked="1">
+
+
+                  <div class="row" bis_skin_checked="1">
+                     {% import 'macros/payroll-card.html' as payrollcards %}
+                     {{ payrollcards.payroll_card(data) }}
+                  </div>
+
+                  <div class="mt-3 mb-3" bis_skin_checked="1">
+                     <button type="submit" id="sendMail" class="btn btn-dark">Send Report</button>
+                  </div>
+
+
+                  <div class="paytable clearfix" bis_skin_checked="1">
+                     <table width="100%" border="0" class="table table-bordered bg-white">
+                        <tbody>
+                           <tr>
+                              <td class="aligeleft">Date</td>
+                              <td class="aligeleft">Day</td>
+                              {% for item in data %}
+                              <td>{{ item.name }}</td>
+                              {% endfor %}
+                           </tr>
+                           
+                           {% for i in calender %}
+                           <tr>
+                              
+                              <td class="aligeleft">{{ i.date }}</td>
+                              <td class="aligeleft">{{ i.day }}</td>
+                              
+                              {% for user_id, worked_hour in calender_data[i.date] %}
+
+                              <td>{{ worked_hour }}</td>
+                              {% endfor %}
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+
+               </div>
+
+
+            </div><!-- End: .userDatatable -->
+         </div><!-- End: .col -->
+      </div>
+   </div>
+
+</div>
+
+</main>
+<div id="overlayer">
+   <div class="loader-overlay">
+      <div class="dm-spin-dots spin-lg">
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+         <span class="spin-dot badge-dot dot-primary"></span>
+      </div>
+   </div>
+</div>
+<div class="overlay-dark-sidebar"></div>
+<div class="customizer-overlay"></div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
+<!-- inject:js-->
+<script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery/jquery-ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/accordion.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/autoComplete.js') }}"></script>
+<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicBadge.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dynamicCheckbox.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/fullcalendar@5.2.0.js') }}"></script>
+<script src="{{ url_for('static', filename='js/google-chart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-2.0.5.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.filterizr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.peity.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.star-rating-svg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet.markercluster.js') }}"></script>
+<script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/message.js') }}"></script>
+<script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/muuri.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/notification.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popover.js') }}"></script>
+<script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/trumbowyg.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wickedpicker.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/apexmain.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drag-drop.js') }}"></script>
+<script src="{{ url_for('static', filename='js/footable.js') }}"></script>
+<script src="{{ url_for('static', filename='js/full-calendar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/googlemap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/icon-loader.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jvectormap-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/leaflet-init.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!-- endinject-->
+{{ flask_util_js.js }}
+<script>
+
+   $(document).ready(function () {
+     
+     $('#sendMail').click(function() {
+       $.ajax({
+            url: "{{ url_for('routes.sendPayrollMail') }}",
+            type: "GET",
+            data: {},
+            success: function(data) {
+                //$("#ajaxResponse").html(JSON.stringify(data, null, 2));
+            },
+            error: function(xhr, status, error) {
+                console.log("Error:", status, error);
+            }
+        });
+     });
+
+
+   });
+
+</script>
+
+{% endblock %}

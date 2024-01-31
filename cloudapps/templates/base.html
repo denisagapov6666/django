@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>{% block title %} {% endblock %}</title>
+
+   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+   <!-- inject:css-->
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/daterangepicker.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/footable.standalone.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/fullcalendar@5.2.0.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-jvectormap-2.0.5.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/line-awesome.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/MarkerCluster.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/MarkerCluster.Default.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/star-rating-svg.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/trumbowyg.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/wickedpicker.min.css') }}">
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+   {% block extrastyles %} {% endblock %}
+
+   <!-- endinject -->
+   
+   <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon.png') }}">
+
+   <!-- Fonts -->
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+   
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body class="layout-{{ session['mode'] }} side-menu">
+    {% include 'partials/_top_nav.html' %}
+
+    <main class="main-content w-103 ml-n1">
+        {% include 'partials/_menu.html' %}
+
+        {% block content %} {% endblock %}
+    
+        {% include 'partials/_footer.html' %}
+
+        {% block scripts %} {% endblock %}
+    </main>
+
+</body>
+</html>
